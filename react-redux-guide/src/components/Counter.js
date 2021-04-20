@@ -6,9 +6,9 @@ import * as counterActions from '../store/actions/counter.actions'
 function Counter({ increment, decrement, count }) {
   return (
     <div>
-      <button onClick={increment}>+</button>
+      <button onClick={() => increment(3)}>+</button>
       <span>{count}</span>
-      <button onClick={decrement}>-</button>
+      <button onClick={() => decrement(10)}>-</button>
     </div >
   )
 }
@@ -19,7 +19,7 @@ function Counter({ increment, decrement, count }) {
 
 const mapStateToProps = state => {
   return {
-    count: state.count
+    count: state.counter.count
   }
 }
 const mapDispatchToProps = dispatch => bindActionCreators(counterActions, dispatch)
