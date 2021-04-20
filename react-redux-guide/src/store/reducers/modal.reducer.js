@@ -7,7 +7,6 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SHOWMODAL:
-    case SHOWMODAL_ASYNC:
       return {
         ...state,
         show: true

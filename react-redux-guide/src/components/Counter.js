@@ -6,10 +6,10 @@ import * as counterActions from '../store/actions/counter.actions'
 function Counter({ increment, increment_async, decrement, count }) {
   return (
     <div>
-      <button onClick={() => increment_async(30)}>+</button>
+      <button onClick={() => increment_async(20)}>+</button>
       <span>{count}</span>
       <button onClick={() => decrement(10)}>-</button>
-    </div >
+    </div>
   )
 }
 

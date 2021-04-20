@@ -1,10 +1,9 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import * as modalActions from '../store/actions/modal.actions'
+import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as modalActions from '../store/actions/modal.actions';
 
-
-function Modal({ showStatus, show_async, hide }) {
+function Modal({ showStatus, show, hide, show_async }) {
   const styles = {
     width: 200,
     height: 200,
@@ -16,19 +15,17 @@ function Modal({ showStatus, show_async, hide }) {
     backgroundColor: 'skyblue',
     display: showStatus ? 'block' : 'none'
   }
-  return (
-    <div>
-      <button onClick={show_async}>显示</button>
-      <button onClick={hide}>隐藏</button>
-      <div style={styles}></div>
-    </div>
-  )
+  return <div>
+    <button onClick={show_async}>显示</button>
+    <button onClick={hide}>隐藏</button>
+    <div style={styles}></div>
+  </div>
 }
 
 const mapStateToProps = state => ({
   showStatus: state.modal.show
-})
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators(modalActions, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Modal)
+export default connect(mapStateToProps, mapDispatchToProps)(Modal);
