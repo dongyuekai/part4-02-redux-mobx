@@ -1,7 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import Counter from './components/Counter'
 import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+
+/**
+ * react-redux
+ * Provider
+ * connect 
+*/
 
 const initialState = {
   count: 0
@@ -26,28 +34,10 @@ const store = createStore(reducer)
 const increment = { type: 'increment' }
 const decrement = { type: 'decrement' }
 
-function Counter() {
-  return (
-    <div>
-      <button onClick={() => store.dispatch(increment)}>+</button>
-      <span>{store.getState().count}</span>
-      <button onClick={() => store.dispatch(decrement)}>-</button>
-    </div>
-  )
-}
-
-store.subscribe(() => {
-  ReactDOM.render(
-    <React.StrictMode>
-      <Counter />
-    </React.StrictMode>,
-    document.getElementById('root')
-  );
-})
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <Counter />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
