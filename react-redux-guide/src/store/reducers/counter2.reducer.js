@@ -8,7 +8,7 @@ const initialState = {
 
 function handleIncrement(state, action) {
   return {
-    count: state.count + 1
+    count: state.count + action.payload //action.payload接收参数
   }
 }
 function handleDecrement(state, action) {

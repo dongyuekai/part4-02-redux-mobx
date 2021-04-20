@@ -8,7 +8,7 @@ import * as counterActions from '../store/actions/counter2.actions'
 function Counter2({ count, increment, decrement }) {
   return (
     <div>
-      <button onClick={increment}>+</button>
+      <button onClick={() => increment(10)}>+</button>
       <span>{count}</span>
       <button onClick={decrement}>-</button>
     </div>
