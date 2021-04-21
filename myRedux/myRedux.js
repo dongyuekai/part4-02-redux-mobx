@@ -54,7 +54,6 @@ function createStore(reducer, preloadedState, enhancer) {
     dispatch,
     subscribe
   }
-
 }
 
 
@@ -104,4 +103,16 @@ function compose() {
     }
     return dispatch
   }
+}
+
+function bindActionCreators(actionCreators, dispatch) {
+  let boundActionCreators = {}
+  for (let key in actionCreators) {
+    (function (key) {
+      boundActionCreators[key] = () => {
+        dispatch(actionCreators[key]())
+      }
+    })(key)
+  }
+  return boundActionCreators
 }

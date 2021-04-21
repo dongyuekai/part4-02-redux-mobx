@@ -57,9 +57,19 @@
     let store = createStore(counterReducer, 0, applyMiddleware(logger, thunk))
     console.log('dyk---store---', store)
 
+    // bindActionCreators
+    let actions = bindActionCreators({ increment, decrement }, store.dispatch)
+
+    function increment() {
+      return { type: 'increment' }
+    }
+    function decrement() {
+      return { type: 'decrement' }
+    }
+
     document.getElementById("increment").addEventListener('click', function () {
-      
-      store.dispatch({ type: 'increment' })
+
+      // store.dispatch({ type: 'increment' })
 
       // 验证enhancer
       // store.dispatch(dispatch => {
@@ -67,6 +77,9 @@
       //     dispatch({ type: 'increment' })
       //   }, 1000);
       // })
+
+      // 测试bindActionCreators
+      actions.increment()
     })
 
     document.getElementById('decrement').addEventListener('click', function () {
