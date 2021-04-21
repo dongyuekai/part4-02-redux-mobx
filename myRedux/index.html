@@ -52,10 +52,15 @@
 
     }
 
+    // combineReducers
+    let rootReducer = combineReducers({
+      counter: counterReducer
+    })
 
     // let store = createStore(counterReducer, 0, enhancer)
-    let store = createStore(counterReducer, 0, applyMiddleware(logger, thunk))
-    console.log('dyk---store---', store)
+    // let store = createStore(counterReducer, 0, applyMiddleware(logger, thunk))
+
+    let store = createStore(rootReducer, { counter: 100 }, applyMiddleware(logger, thunk))
 
     // bindActionCreators
     let actions = bindActionCreators({ increment, decrement }, store.dispatch)
@@ -69,6 +74,7 @@
 
     document.getElementById("increment").addEventListener('click', function () {
 
+      // 验证applyMiddleware或enhancer都行
       // store.dispatch({ type: 'increment' })
 
       // 验证enhancer
@@ -87,7 +93,8 @@
     })
 
     store.subscribe(() => {
-      document.getElementById('box').innerHTML = store.getState()
+      // document.getElementById('box').innerHTML = store.getState()
+      document.getElementById("box").innerHTML = store.getState().counter;
     })
 
 

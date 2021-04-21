@@ -116,3 +116,25 @@ function bindActionCreators(actionCreators, dispatch) {
   }
   return boundActionCreators
 }
+
+function combineReducers(reducers) {
+
+  // 1 检查reducer类型 它必须是函数
+  let reducerKeys = Object.keys(reducers)
+  for (let i = 0; i < reducerKeys.length; i++) {
+    let key = reducerKeys[i]
+    if (typeof reducers[key] !== 'function') throw new Error('reducer必须是函数')
+  }
+  // 2 调用一个一个的小的reducer 将每一个小的reducer中返回的状态存储在一个新的大的对象中
+  return function (state, action) {
+    let nextState = {};
+    for (let i = 0; i < reducerKeys.length; i++) {
+      let key = reducerKeys[i];
+      let reducer = reducers[key];
+      let previousStateForKey = state[key];
+      nextState[key] = reducer(previousStateForKey, action)
+    }
+    return nextState;
+  }
+  
+}
