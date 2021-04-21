@@ -12,6 +12,8 @@
   <span id='box'>0</span>
   <button id='decrement'>-1</button>
   <script src='./myRedux.js'></script>
+  <script src='./middlewares/logger.js'></script>
+  <script src='./middlewares/thunk.js'></script>
   <script>
     // 定以一个reducer函数
     function counterReducer(state, action) {
@@ -26,6 +28,7 @@
     }
 
     // 增强store 返回一个增强的store
+    // 是applyMiddleware的内部实现基础
     function enhancer(createStore) {
       return function (reducer, preloadedState) {
 
@@ -50,16 +53,20 @@
     }
 
 
-    let store = createStore(counterReducer, 0, enhancer)
+    // let store = createStore(counterReducer, 0, enhancer)
+    let store = createStore(counterReducer, 0, applyMiddleware(logger, thunk))
     console.log('dyk---store---', store)
 
     document.getElementById("increment").addEventListener('click', function () {
-      // store.dispatch({ type: 'increment' })
-      store.dispatch(dispatch => {
-        setTimeout(() => {
-          dispatch({ type: 'increment' })
-        }, 1000);
-      })
+      
+      store.dispatch({ type: 'increment' })
+
+      // 验证enhancer
+      // store.dispatch(dispatch => {
+      //   setTimeout(() => {
+      //     dispatch({ type: 'increment' })
+      //   }, 1000);
+      // })
     })
 
     document.getElementById('decrement').addEventListener('click', function () {

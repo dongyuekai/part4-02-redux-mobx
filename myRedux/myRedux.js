@@ -70,3 +70,38 @@ function isPlainObject(obj) {
   }
   return Object.getPrototypeOf(obj) === proto
 }
+
+
+// applyMiddleware就是和enhancer函数差不多的实现方式
+// 返回一个增强的store
+function applyMiddleware(...middlewares) {
+  return function (createStore) {
+    return function (reducer, preloadedState) {
+      // 创建store
+      let store = createStore(reducer, preloadedState)
+      // 阉割版的store
+      let middlewareAPI = {
+        getState: store.getState,
+        dispatch: store.dispatch
+      }
+      // 调用中间件第一层函数 参数传递阉割版的store
+      let chain = middlewares.map(middleware => middleware(middlewareAPI))
+      let dispatch = compose(...chain)(store.dispatch)
+      return {
+        ...store,
+        dispatch
+      }
+    }
+  }
+}
+
+function compose() {
+  // 获得中间件第一层函数返回的函数 return function (next) {}
+  let funcs = [...arguments]
+  return function (dispatch) {
+    for (let i = funcs.length - 1; i >= 0; i--) {
+      dispatch = funcs[i](dispatch)
+    }
+    return dispatch
+  }
+}
