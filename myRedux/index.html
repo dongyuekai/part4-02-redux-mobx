@@ -25,11 +25,41 @@
       }
     }
 
+    // 增强store 返回一个增强的store
+    function enhancer(createStore) {
+      return function (reducer, preloadedState) {
 
-    let store = createStore(counterReducer, 0)
+        // 原来的store和dispatch
+        let store = createStore(reducer, preloadedState)
+        let dispatch = store.dispatch
+
+        function _dispatch(action) {
+          if (typeof action === 'function') {
+            return action(dispatch)
+          }
+          dispatch(action)
+        }
+
+        // 返回增强后的store
+        return {
+          ...store,
+          dispatch: _dispatch
+        }
+      }
+
+    }
+
+
+    let store = createStore(counterReducer, 0, enhancer)
+    console.log('dyk---store---', store)
 
     document.getElementById("increment").addEventListener('click', function () {
-      store.dispatch({ type: 'increment' })
+      // store.dispatch({ type: 'increment' })
+      store.dispatch(dispatch => {
+        setTimeout(() => {
+          dispatch({ type: 'increment' })
+        }, 1000);
+      })
     })
 
     document.getElementById('decrement').addEventListener('click', function () {
