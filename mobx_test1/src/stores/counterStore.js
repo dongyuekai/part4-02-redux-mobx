@@ -3,7 +3,7 @@
 // 2 将store对象放在一个全局的 组件可以够到的地方
 // 3 让组件获取store对象中的状态 并将状态显示在组件中
 
-import { observable, configure, action, runInAction, flow, computed } from 'mobx'
+import { observable, configure, action, runInAction, flow, computed, autorun } from 'mobx'
 import axios from 'axios'
 
 // 通过配置强制程序使用action函数更改应用程序中的状态
@@ -12,9 +12,24 @@ configure({ enforceActions: 'observed' });
 
 class CounterStore {
 
+  constructor() {
+    autorun(() => {
+      try {
+        uniqueUserName(this.username)
+        console.log('用户名可用')
+      } catch (error) {
+        console.log('用户名不可使用')
+      }
+    }, {
+      delay: 2000
+    })
+  }
+
   // 变成可观察数据
   @observable count = 0;
   @observable users = []
+  @observable username = ''
+
 
   // @action increment = () => {
   //   this.count = this.count + 1
@@ -27,6 +42,12 @@ class CounterStore {
   @action decrement = () => {
     this.count = this.count - 1
   }
+
+  @action.bound changeUserName(username) {
+    this.username = username
+  }
+
+
 
   // 异步更新状态 方式一 runInAction
   // @action.bound async getData() {
@@ -49,5 +70,15 @@ class CounterStore {
 }
 
 const counter = new CounterStore()
+
+function uniqueUserName(username) {
+  return new Promise((resolve, reject) => {
+    if (username === 'admin') {
+      reject('用户名admin不可使用')
+    } else {
+      resolve()
+    }
+  })
+}
 
 export default counter
