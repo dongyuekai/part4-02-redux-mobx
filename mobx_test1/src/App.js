@@ -15,6 +15,7 @@ class App extends Component {
         <button onClick={counter.increment}>+1</button>
         <span>{counter.count}</span>
         <button onClick={counter.decrement}>-1</button>
+        <span>{counter.getResult}</span>
         <div>
           {
             counter.users.map(user => (
