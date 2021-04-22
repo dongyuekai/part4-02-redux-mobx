@@ -16,6 +16,18 @@ class TodoStore {
   @action.bound todoDelete(index) {
     this.todos.splice(index, 1);
   }
+
+  @action.bound todoDelteCompleted() {
+    let delArr = this.todos.filter(todo => todo.isCompleted === true)
+    let delIndex = []
+    for (let i = 0; i < delArr.length; i++) {
+      delIndex.push(this.todos.findIndex(item => item.taskName === delArr[i].taskName))
+    }
+    debugger
+    for (let j = 0; j < delIndex.length; j++) {
+      this.todos.splice(j, 1)
+    }
+  }
   // 更改任务是否已完成状态
   @action.bound changeCompleted(index, flag) {
     this.todos[index].isCompleted = flag;
