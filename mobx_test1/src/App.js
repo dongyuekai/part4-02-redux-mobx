@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import { inject, observer } from 'mobx-react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+@inject('counter')
+@observer
+class App extends Component {
+  componentDidMount() {
+    const { getData } = this.props.counter
+    getData()
+  }
+  render() {
+    const { counter } = this.props
+    return (
+      <div>
+        <button onClick={counter.increment}>+1</button>
+        <span>{counter.count}</span>
+        <button onClick={counter.decrement}>-1</button>
+        <div>
+          {
+            counter.users.map(user => (
+              <div key={user.id}>
+                <span>{user.name}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    );
+  }
+
 }
 
 export default App;
