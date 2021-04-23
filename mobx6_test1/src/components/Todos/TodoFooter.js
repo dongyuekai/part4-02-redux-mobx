@@ -1,8 +1,11 @@
+import { useTodoListStore } from '../../stores/TodoStore/TodoListStore'
+import { observer } from 'mobx-react-lite'
 function TodoFooter() {
+  const todoListStore = useTodoListStore()
   return (
     <footer className="footer">
       <span className="todo-count">
-        <strong>0</strong> item left
+        <strong>{todoListStore.unCompletedTodoCount}</strong> item left
       </span>
       <ul className="filters">
         <li>
@@ -20,4 +23,4 @@ function TodoFooter() {
   )
 }
 
-export default TodoFooter
+export default observer(TodoFooter)
