@@ -2,10 +2,10 @@ import TodoHeader from "./TodoHeader"
 import TodoFooter from "./TodoFooter"
 import TodoView from "./TodoView"
 import { observer } from 'mobx-react-lite'
-import { useTodoListStore } from '../../stores/TodoStore/TodoListStore'
+import { useRootStore } from '../../stores/RootStore'
 
 function TodoListView() {
-  const todoListStore = useTodoListStore()
+  const { todoListStore } = useRootStore()
   return (
     <section className="todoapp">
       <TodoHeader />

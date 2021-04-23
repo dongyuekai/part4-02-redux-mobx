@@ -13,6 +13,7 @@ configure({ enforceActions: 'observed' });
 class CounterStore {
 
   constructor() {
+    // 数据检测 比如校验数据
     autorun(() => {
       try {
         uniqueUserName(this.username)

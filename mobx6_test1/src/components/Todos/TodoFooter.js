@@ -1,7 +1,7 @@
-import { useTodoListStore } from '../../stores/TodoStore/TodoListStore'
+import { useRootStore } from '../../stores/RootStore'
 import { observer } from 'mobx-react-lite'
 function TodoFooter() {
-  const todoListStore = useTodoListStore()
+  const { todoListStore } = useRootStore()
   return (
     <footer className="footer">
       <span className="todo-count">

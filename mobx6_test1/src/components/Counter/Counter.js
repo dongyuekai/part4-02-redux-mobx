@@ -1,6 +1,8 @@
 import { observer } from 'mobx-react-lite'
+import { useRootStore } from '../../stores/RootStore'
 
-function Counter({ counterStore }) {
+function Counter() {
+  const { counterStore } = useRootStore()
   return (
     <div>
       <p className='paragraph'>{counterStore.count}</p>
