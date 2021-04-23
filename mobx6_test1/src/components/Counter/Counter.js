@@ -12,6 +12,7 @@ function Counter() {
     // })
 
     // reaction 方法提供了更加细颗粒度的状态控制 和 autorun 不同，reaction 初始时不会执行副作用
+    
     reaction(
       () => counterStore.count,
       (current, previous) => {
