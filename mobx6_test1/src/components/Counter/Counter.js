@@ -1,8 +1,16 @@
 import { observer } from 'mobx-react-lite'
 import { useRootStore } from '../../stores/RootStore'
+import { autorun } from 'mobx'
+import { useEffect } from 'react'
 
 function Counter() {
   const { counterStore } = useRootStore()
+  useEffect(() => {
+    // autorun当内部有状态更新的时候就会自动执行
+    autorun(() => {
+      console.log('dyk---', counterStore.count)
+    })
+  }, [])
   return (
     <div>
       <p className='paragraph'>{counterStore.count}</p>
