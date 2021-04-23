@@ -19,13 +19,13 @@ class TodoStore {
 
   @action.bound todoDelteCompleted() {
     let delArr = this.todos.filter(todo => todo.isCompleted === true)
-    let delIndex = []
+    let delItem = []
     for (let i = 0; i < delArr.length; i++) {
-      delIndex.push(this.todos.findIndex(item => item.taskName === delArr[i].taskName))
+      delItem.push(...this.todos.filter(item => item.taskName === delArr[i].taskName))
     }
-    debugger
-    for (let j = 0; j < delIndex.length; j++) {
-      this.todos.splice(j, 1)
+    for (let j = 0; j < delItem.length; j++) {
+      let index = this.todos.findIndex(item => item.taskName === delItem[j].taskName)
+      this.todos.splice(index, 1)
     }
   }
   // 更改任务是否已完成状态
